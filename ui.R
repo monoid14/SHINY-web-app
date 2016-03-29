@@ -26,7 +26,8 @@ shinyUI(pageWithSidebar(
         p("Note that when changing the weight and model parameters, the plot and 
           the predicted value are automatically updated. However, the summary report 
           is only updated after the button 'Make report' is pressed."),
-        a("Link to source code", href = "http://link.to.this.file"),  ###update this!
+        a("Link to source code", 
+          href = "https://github.com/monoid14/SHINY-web-app"),  ###update this!
         
         h3("Input parameters"), 
         p("Set parameters to see the expected fuel consumption."),
