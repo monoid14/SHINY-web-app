@@ -1,0 +1,82 @@
+
+Fuel consumption vs weight of cars
+========================================================
+Brief description of a SHINY application built as part 
+of a Coursera assignment
+
+
+Application concept
+========================================================
+
+As part of the assignment, we have built a SHINY app
+that:
+
+- Given the **weight** of a car it predicts its **fuel** 
+**consumption**.
+- It uses a **linear** and a **quadratic** model for prediction.
+
+The user inputs the car weight and selects one of the two 
+models.
+
+- A text field automatically reflects the predicted 
+consumption value.
+- A relevant plot is automatically updated to align with 
+the user input.
+
+
+Implementation details
+========================================================
+
+- We have used the **mtcars** dataset for fitting the models.
+
+```{r echo=FALSE}
+data("mtcars")
+```
+
+- The linear model and the quadratic models are fitted as follows:
+
+```{r echo=TRUE}
+fit1.wt <- lm(mpg ~ wt, data = mtcars)
+fit2.wt <- lm(mpg ~ poly(wt, 2), data = mtcars)
+```
+
+- The predicted value for the default weight (the mean 
+weight = `r mean(mtcars$wt)`) and the default model (linear) is:
+
+```{r echo=TRUE}
+predict(fit1.wt, data.frame(wt=mean(mtcars$wt)))
+```
+
+
+Visualization of fitted models
+========================================================
+
+- The plot refreshes itself to reflect user input.
+- The initial state of the plot depicts the default values.
+
+```{r, echo=FALSE}
+xplot <- seq(min(mtcars$wt), max(mtcars$wt), length=100)
+plot(mtcars$wt, mtcars$mpg, xlab = "Car weight (lb/1000)", 
+     ylab = "Fuel consumption (Miles Per Gallon)", 
+     main = "Fuel consumption: linear and quadratic models")
+abline(fit1.wt, col = "blue", lwd = 2)
+lines(xplot, predict(fit2.wt, newdata=data.frame(wt=xplot)), 
+      col="green", lwd = 2)
+abline(v = mean(mtcars$wt), col = "gray", lty = 2)
+abline(h = predict(fit1.wt, data.frame(wt=mean(mtcars$wt))), 
+       col = "red", lty = 2)
+```
+
+
+Other application features
+========================================================
+
+- By pressing a button the user can generate a report 
+for the selected weight that calculates the difference
+in the predictions of the two models.
+
+- **Documentation** is embedded in the application, 
+explaining how to use it.
+
+- A link is included in the application pointing to its 
+**source code**.
